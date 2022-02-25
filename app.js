@@ -13,6 +13,9 @@ const app = express();
 // set up a new database
 const db = new Datastore();
 
+// logging constant
+const log = (message) => console.log(message);
+
 // add body-parsing functionality to the app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -42,9 +45,9 @@ let itemBuilder = (itemName, itemDescription, itemPrice, itemID) => {
 // CREATE (Post)
 app.post('/create', (req,res) => {
     // log that we are running the create operation
-    console.log(`\nCreate - POST`);
+    log(`\nCreate - POST`);
     // create an item from the request body
-    let item = itemBuilder(req.body.name, req.body.description, parseInt(req.body.price), parseInt(id));
+    let item = itemBuilder(req.body.name, req.body.description, req.body.price, parseInt(id));
     // increment our id by one
     id++;
 
@@ -55,14 +58,14 @@ app.post('/create', (req,res) => {
         // otherwise 201 - Created and the item
         res.status(201).send(item);
         //log that item to console
-        console.log(`Created item: ${JSON.stringify(item)}`);
+        log(`Created item: ${JSON.stringify(item)}`);
     });
 });
 
 // READ ALL (Get)
 app.get('/read', (req,res) => {
     // log that we are running the read operation
-    console.log(`\nRead - GET`);
+    log(`\nRead - GET`);
 
     // reading all items from database
     db.find({}, (err, items) => {
@@ -71,14 +74,14 @@ app.get('/read', (req,res) => {
         // otherwise 200 - OK
         res.status(200).send(items);
         //log the items to console
-        console.log(`Reading items: ${JSON.stringify(items)}`);
+        log(`Reading items: ${JSON.stringify(items)}`);
     });
 });
 
 // READ ONE (Get)
 app.get('/read/:id', (req,res) => {
     // log that we are running the read operation
-    console.log(`\nRead - GET`);
+    log(`\nRead - GET`);
 
     // reading item from database by id
     db.find({_id : parseInt(req.params.id)}, (err, item) => {
@@ -87,14 +90,14 @@ app.get('/read/:id', (req,res) => {
         // otherwise 200 - OK
         res.status(200).send(item);
         //log the item to console
-        console.log(`Reading item: ${JSON.stringify(item)}`);
+        log(`Reading item: ${JSON.stringify(item)}`);
     });
 });
 
 // UPDATE (Put)
 app.put('/update/:id', (req,res) => {
     // log that we are running the read operation
-    console.log(`\nUpdate - PUT`);
+    log(`\nUpdate - PUT`);
     // create a new item object
     let updatedItem = itemBuilder(req.body.name, req.body.description, req.body.price, parseInt(req.params.id));
 
@@ -106,14 +109,14 @@ app.put('/update/:id', (req,res) => {
         // otherwise 200 - OK
         res.sendStatus(200);
         // log the item ID being returned
-        console.log(`Updated item id: ${JSON.stringify(itemID)}`);
+        log(`Updated item id: ${JSON.stringify(itemID)}`);
     });
 });
 
 // DELETE (Delete)
 app.delete('/delete/:id', (req,res) => {
     // log that we are running the delete operation
-    console.log(`\nDelete - DELETE`);
+    log(`\nDelete - DELETE`);
 
     // deleting item from database by id
     db.remove({_id : parseInt(req.params.id)}, (err, itemID) => {
@@ -122,7 +125,7 @@ app.delete('/delete/:id', (req,res) => {
         // otherwise 200 - OK
         res.sendStatus(200);
         //log the item id to console
-        console.log(`Deleted item id: ${JSON.stringify(itemID)}`);
+        log(`Deleted item id: ${JSON.stringify(itemID)}`);
     });
 });
 
