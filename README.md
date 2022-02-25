@@ -87,3 +87,55 @@ $ curl -s -X DELETE http://localhost:8080/delete/<id>
 n.b: For these commands anything surrounded by angled braces <> needs to be replaced by you
 
 ---
+
+## Testing
+
+To run tests on this project, use the command
+
+~~~ bash
+$ npm test
+~~~
+
+### Example tests
+
+#### Unit
+
+There is a unit test included in this project, we are testing the item builder for the objects that it returns.
+
+If we test the builder and input a name of "item", a description of "test description", a price of 99 and a id of 4... We can expect an object to be created that matches this format.
+
+~~~ JavaScript
+{
+    name : "item",
+    description : "test description",
+    price : 99,
+    _id : 4
+}
+~~~
+
+#### Integration
+
+AN example integration test that we can create for this project is to test the RESTful endpoints.
+
+If we test the DELETE endpoint by sending a request with a method of 'DELETE' and a path of '/delete/1' we should expect the reponse to be:
+
+Status code: 200 
+Status Text: OK
+
+#### System Testing
+
+For system integration testing, we could test our CREATE method for our project, and check that the output from our READ method is expected.
+
+Alternatively we could 'black-box' system test by using the front-end to create an item and reading the page to make sure the new item has been created.
+
+#### User Acceptance Testing
+
+*As a* user
+*When* I enter a item id into the delete field and press the delete button
+*I want* the item to be deleted
+
+*GIVEN* a user can acces the front-end of the application
+*WHEN* they input an id into the delete item input
+*AND* an item with that id exists
+*AND* they press the delete item button
+*THEN* that item is deleted from the database
