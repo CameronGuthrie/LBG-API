@@ -87,3 +87,32 @@ $ curl -s -X DELETE http://localhost:8080/delete/<id>
 n.b: For these commands anything surrounded by angled braces <> needs to be replaced by you
 
 ---
+## Testing
+
+To run tests on this project use the command
+~~~ bash
+$ npm test
+~~~
+
+### Example tests
+
+#### Unit
+
+There is a unit test in this project , we are testing the
+ item builder for the objects that it returns
+
+ If we test the builder and input a name of "item" a description of 'test description' a proce off 99 and id of 4 we can expect an object like
+ ~~~ JavaScript
+ {
+     name : "item",
+     description : "test description" ,
+     price : 99,
+     _id : 4
+ }
+ ~~~
+ #### Integration
+
+ An example is to test the restful endpoints.
+
+ IF we test the DELETE endpoint by sending request with method 'DELETE' and path '/delete/1'
+ we should expect status http 200 and OK
